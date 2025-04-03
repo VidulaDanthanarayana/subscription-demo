@@ -1,0 +1,26 @@
+runtime: nodejs22
+
+service: subscriptions-demo
+
+instance_class: F1
+
+env_variables:
+  NODE_ENV: 'production'
+
+handlers:
+  # CSS and JS files from Next.js
+  - url: /_next/static/(.*)
+    static_files: .next/static/\1
+    upload: .next/static/.*
+    secure: always
+
+  # Public folder assets
+  - url: /(.*\.(gif|png|jpg|ico|svg|css|js|woff|woff2|ttf|eot))$
+    static_files: public/\1
+    upload: public/.*\.(gif|png|jpg|ico|svg|css|js|woff|woff2|ttf|eot)$
+    secure: always
+
+  # All other routes
+  - url: /.*
+    secure: always
+    script: auto
