@@ -1,8 +1,5 @@
 // app/subscriptions/[id]/page.tsx
-"use client";
-
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { notFound } from 'next/navigation';
 
 interface SubscriptionTransaction {
   id: number;
@@ -22,44 +19,54 @@ interface SubscriptionDetails {
   };
 }
 
-export default function SubscriptionDetailsPage() {
-  const params = useParams();
-  const [subscription, setSubscription] = useState<SubscriptionDetails | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+// This function generates the static paths for all subscription IDs
+export async function generateStaticParams() {
+  // Since we don't know all possible IDs in advance, we'll generate some placeholder IDs
+  // In a real application, you would fetch this list from your API
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' },
+    // Add more IDs as needed
+  ];
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://onepay-subscription-uat-bnf3bvbybtdaajay.centralindia-01.azurewebsites.net/v3/subscription/${params.id}/`,
-          {
-            headers: {
-              Authorization: `ca00d67bf74d77b01fa26dc6780d7ff9522d8f82d30ff813d4c605f2662cea9ad332054cc66aff68.EYAW1189D04CD635D8B20`,
-            },
-          }
-        );
-
-        const result = await response.json();
-
-        if (response.ok) {
-          setSubscription(result);
-        } else {
-          setError(result.message || "Failed to fetch subscription details");
-        }
-      } catch (err) {
-        setError("Network error");
-      } finally {
-        setLoading(false);
+// This function fetches the data for each static path
+async function getSubscriptionData(id: string): Promise<SubscriptionDetails> {
+  try {
+    const response = await fetch(
+      `https://onepay-subscription-uat-bnf3bvbybtdaajay.centralindia-01.azurewebsites.net/v3/subscription/${id}/`,
+      {
+        headers: {
+          Authorization: `ca00d67bf74d77b01fa26dc6780d7ff9522d8f82d30ff813d4c605f2662cea9ad332054cc66aff68.EYAW1189D04CD635D8B20`,
+        },
+        next: { revalidate: 3600 }, // Revalidate every hour
       }
-    };
+    );
 
-    fetchData();
-  }, [params.id]);
+    if (!response.ok) {
+      throw new Error('Failed to fetch subscription');
+    }
 
-  if (loading) return <div className="text-center py-8">Loading...</div>;
-  if (error) return <div className="text-red-500 text-center py-8">{error}</div>;
-  if (!subscription) return <div className="text-center py-8">No subscription found</div>;
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching subscription:', error);
+    throw error;
+  }
+}
+
+export default async function SubscriptionDetailsPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  let subscription: SubscriptionDetails;
+  
+  try {
+    subscription = await getSubscriptionData(params.id);
+  } catch (error) {
+    notFound();
+  }
 
   const { subscription_id, app_id, subscription_transactions } = subscription.data;
 
@@ -99,20 +106,14 @@ export default function SubscriptionDetailsPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {txn.onepay_transaction_id}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    {txn.status ? (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                        Success
-                      </span>
-                    ) : (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                        Failed
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{txn.status_description}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(txn.created_at).toLocaleString()}
+                    {txn.status ? 'Success' : 'Failed'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {txn.status_description}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {new Date(txn.created_at).toLocaleDateString()}
                   </td>
                 </tr>
               ))}
