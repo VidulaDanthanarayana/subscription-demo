@@ -4,8 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
-  distDir: 'out',
+  // Vercel works best with the default Next.js configuration
+  // No need for trailingSlash or custom output directory
 };
 
 module.exports = nextConfig; 
