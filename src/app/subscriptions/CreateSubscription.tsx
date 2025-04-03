@@ -116,16 +116,16 @@ export default function CreateSubscription({ onSuccess }: { onSuccess?: () => vo
     <div>
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow-sm"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105"
       >
         Create New Subscription
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl shadow-xl">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Create New Subscription</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl p-8 w-full max-w-2xl shadow-2xl transform transition-all duration-300 ease-in-out">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Create New Subscription</h2>
               <button
                 onClick={() => {
                   setIsOpen(false);
@@ -133,7 +133,7 @@ export default function CreateSubscription({ onSuccess }: { onSuccess?: () => vo
                   setSubmitError(null);
                   setSubmitSuccess(false);
                 }}
-                className="text-gray-500 hover:text-gray-700 text-lg"
+                className="text-gray-500 hover:text-gray-700 text-xl transition-colors duration-200"
               >
                 ✕
               </button>
@@ -141,34 +141,34 @@ export default function CreateSubscription({ onSuccess }: { onSuccess?: () => vo
 
             {/* Success/Error messages */}
             {submitSuccess && (
-              <div className="mb-4 p-3 bg-green-50 text-green-700 rounded-md border border-green-100">
+              <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg border border-green-100 shadow-sm">
                 Subscription created successfully! Redirecting...
               </div>
             )}
             {submitError && (
-              <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md border border-red-100">
+              <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-100 shadow-sm">
                 {submitError}
               </div>
             )}
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Subscription Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Subscription Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register("name", { required: "Name is required" })}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-all duration-200"
                     placeholder="Enter subscription name"
                   />
-                  {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
+                  {errors.name && <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>}
                 </div>
 
                 {/* Amount */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Amount <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -179,47 +179,47 @@ export default function CreateSubscription({ onSuccess }: { onSuccess?: () => vo
                       required: "Amount is required",
                       min: { value: 0.01, message: "Amount must be greater than 0" }
                     })}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-all duration-200"
                     placeholder="0.00"
                   />
-                  {errors.amount && <p className="mt-1 text-sm text-red-600">{errors.amount.message}</p>}
+                  {errors.amount && <p className="mt-2 text-sm text-red-600">{errors.amount.message}</p>}
                 </div>
 
                 {/* Currency */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Currency <span className="text-red-500">*</span>
                   </label>
                   <select
                     {...register("currency", { required: "Currency is required" })}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-all duration-200"
                   >
                     <option value="LKR">LKR</option>
                     <option value="USD">USD</option>
                   </select>
-                  {errors.currency && <p className="mt-1 text-sm text-red-600">{errors.currency.message}</p>}
+                  {errors.currency && <p className="mt-2 text-sm text-red-600">{errors.currency.message}</p>}
                 </div>
 
                 {/* Interval */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Interval <span className="text-red-500">*</span>
                   </label>
                   <select
                     {...register("interval", { required: "Interval is required" })}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-all duration-200"
                   >
                     <option value="DAY">Daily</option>
                     <option value="WEEK">Weekly</option>
                     <option value="MONTH">Monthly</option>
                     <option value="YEAR">Yearly</option>
                   </select>
-                  {errors.interval && <p className="mt-1 text-sm text-red-600">{errors.interval.message}</p>}
+                  {errors.interval && <p className="mt-2 text-sm text-red-600">{errors.interval.message}</p>}
                 </div>
 
                 {/* Interval Count */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Interval Count <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -229,15 +229,15 @@ export default function CreateSubscription({ onSuccess }: { onSuccess?: () => vo
                       required: "Interval count is required",
                       min: { value: 1, message: "Must be at least 1" }
                     })}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-all duration-200"
                     placeholder="1"
                   />
-                  {errors.interval_count && <p className="mt-1 text-sm text-red-600">{errors.interval_count.message}</p>}
+                  {errors.interval_count && <p className="mt-2 text-sm text-red-600">{errors.interval_count.message}</p>}
                 </div>
 
                 {/* Days Until Due */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Days Until Due <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -245,104 +245,16 @@ export default function CreateSubscription({ onSuccess }: { onSuccess?: () => vo
                     min="0"
                     {...register("days_until_due", { 
                       required: "Days until due is required",
-                      min: { value: 0, message: "Must be at least 1" }
+                      min: { value: 0, message: "Must be at least 0" }
                     })}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                    placeholder="5"
-                  />
-                  {errors.days_until_due && <p className="mt-1 text-sm text-red-600">{errors.days_until_due.message}</p>}
-                </div>
-
-                {/* Trial Period Days */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Trial Period Days
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    {...register("trial_period_days")}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 transition-all duration-200"
                     placeholder="0"
                   />
+                  {errors.days_until_due && <p className="mt-2 text-sm text-red-600">{errors.days_until_due.message}</p>}
                 </div>
               </div>
 
-              {/* Customer Details Section */}
-              <div className="border-t pt-4">
-                <h3 className="font-medium text-gray-800 mb-3">Customer Details</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* First Name */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      First Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      {...register("customer_details.first_name", { required: "First name is required" })}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                      placeholder="Enter first name"
-                    />
-                    {errors.customer_details?.first_name && (
-                      <p className="mt-1 text-sm text-red-600">{errors.customer_details.first_name.message}</p>
-                    )}
-                  </div>
-
-                  {/* Last Name */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Last Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      {...register("customer_details.last_name", { required: "Last name is required" })}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                      placeholder="Enter last name"
-                    />
-                    {errors.customer_details?.last_name && (
-                      <p className="mt-1 text-sm text-red-600">{errors.customer_details.last_name.message}</p>
-                    )}
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      {...register("customer_details.email", { 
-                        required: "Email is required",
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Invalid email address"
-                        }
-                      })}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                      placeholder="Enter email"
-                    />
-                    {errors.customer_details?.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.customer_details.email.message}</p>
-                    )}
-                  </div>
-
-                  {/* Phone Number */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      {...register("customer_details.phone_number", { required: "Phone number is required" })}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                      placeholder="Enter phone number"
-                    />
-                    {errors.customer_details?.phone_number && (
-                      <p className="mt-1 text-sm text-red-600">{errors.customer_details.phone_number.message}</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Form Actions */}
-              <div className="flex justify-end space-x-3 pt-4">
+              <div className="mt-8 flex justify-end space-x-4">
                 <button
                   type="button"
                   onClick={() => {
@@ -351,27 +263,16 @@ export default function CreateSubscription({ onSuccess }: { onSuccess?: () => vo
                     setSubmitError(null);
                     setSubmitSuccess(false);
                   }}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-                  disabled={isSubmitting}
+                  className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200 font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                   disabled={isSubmitting}
+                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? (
-                    <span className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Creating...
-                    </span>
-                  ) : (
-                    "Create Subscription"
-                  )}
+                  {isSubmitting ? "Creating..." : "Create Subscription"}
                 </button>
               </div>
             </form>

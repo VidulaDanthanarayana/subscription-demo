@@ -1,0 +1,72 @@
+.test-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+}
+
+.test-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-width: 28rem;
+  width: 100%;
+}
+
+.test-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 1rem;
+}
+
+.test-text {
+  color: #374151;
+  margin-bottom: 1.5rem;
+}
+
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.test-box {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  color: white;
+}
+
+.test-box-red {
+  background-color: #ef4444;
+}
+
+.test-box-green {
+  background-color: #10b981;
+}
+
+.test-box-blue {
+  background-color: #3b82f6;
+}
+
+.test-box-yellow {
+  background-color: #f59e0b;
+}
+
+.test-button {
+  width: 100%;
+  background-color: #9333ea;
+  color: white;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.test-button:hover {
+  background-color: #7e22ce;
+} 
