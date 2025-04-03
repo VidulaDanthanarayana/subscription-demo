@@ -1,19 +1,23 @@
 [build]
   command = "npm run build"
-  publish = ".next"
-  environment = { NETLIFY_NEXT_PLUGIN_SKIP = "true" }
+  publish = "out"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# Handle static file serving
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 # Handle client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = true
 
-# Ensure proper handling of static files
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate" 
+# Handle 404s
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+  force = true 
