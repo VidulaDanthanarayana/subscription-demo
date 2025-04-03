@@ -2,8 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  distDir: 'build', 
-  output: "standalone",
+  // Remove distDir and output settings for better Netlify compatibility
 };
 
 export default nextConfig;
